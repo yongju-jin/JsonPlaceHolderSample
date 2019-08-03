@@ -1,4 +1,4 @@
 package yongju.riiidhw.ui.detail
 
-class DetailsActivity {
+class DetailUseCase {
 }

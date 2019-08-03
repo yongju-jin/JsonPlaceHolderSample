@@ -9,9 +9,9 @@ import io.reactivex.rxkotlin.plusAssign
 import yongju.riiidhw.data.DataManager
 import yongju.riiidhw.model.TypiCodeModel
 
-class MainDataSource(private val compositeDisposable: CompositeDisposable,
-                     private val dataManager: DataManager,
-                     private val noResult: MutableLiveData<Boolean>): PositionalDataSource<TypiCodeModel>() {
+class PostsDataSource(private val compositeDisposable: CompositeDisposable,
+                      private val dataManager: DataManager,
+                      private val noResult: MutableLiveData<Boolean>): PositionalDataSource<TypiCodeModel>() {
     override fun loadInitial(
         params: LoadInitialParams,
         callback: LoadInitialCallback<TypiCodeModel>

@@ -12,6 +12,10 @@ class DataManagerImpl(
         return apiInterface.getPosts(_start, _limit)
     }
 
+    override fun getPost(postId: Long): Single<TypiCodeModel> {
+        return apiInterface.getPost(postId)
+    }
+
     companion object {
         val INSTANCE by lazy {
             DataManagerImpl(

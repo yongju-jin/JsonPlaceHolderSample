@@ -7,14 +7,14 @@ import yongju.riiidhw.data.DataManager
 import yongju.riiidhw.model.TypiCodeModel
 
 
-class MainFactory(
+class PostsFactory(
     private val compositeDisposable: CompositeDisposable,
     private val dataManager: DataManager,
     private val noResult: MutableLiveData<Boolean>
 ): DataSource.Factory<Int, TypiCodeModel>() {
 
     override fun create(): DataSource<Int, TypiCodeModel> {
-        return MainDataSource(
+        return PostsDataSource(
             compositeDisposable,
             dataManager,
             noResult
