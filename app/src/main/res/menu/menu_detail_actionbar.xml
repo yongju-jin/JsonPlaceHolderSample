@@ -8,5 +8,5 @@
     <item android:id="@+id/menu_detail_delete"
         android:icon="@android:drawable/ic_menu_delete"
         android:title="@string/menu_detail_delete"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 </menu>

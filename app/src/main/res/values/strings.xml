@@ -3,4 +3,6 @@
     <string name="detail_comment">Comments</string>
     <string name="menu_detail_edit">edit</string>
     <string name="menu_detail_delete">delete</string>
+    <string name="title">title</string>
+    <string name="body">body</string>
 </resources>

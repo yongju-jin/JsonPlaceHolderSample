@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
-import io.reactivex.schedulers.Schedulers
 import yongju.riiidhw.R
 import yongju.riiidhw.data.DataManagerImpl
 import yongju.riiidhw.databinding.FragmentDetailBinding
@@ -24,9 +23,7 @@ import yongju.riiidhw.ui.ext.toDP
 
 class DetailFragment : BaseFragment(), DetailUseCase {
     private val typiCode by lazy {
-        arguments?.let {
-            it.getParcelable<TypiCodeModel>(TYPI_CODE)
-        }
+        arguments?.getParcelable<TypiCodeModel>(TYPI_CODE)
     }
 
     private val mainViewModel by lazy {
@@ -55,6 +52,7 @@ class DetailFragment : BaseFragment(), DetailUseCase {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -66,6 +64,9 @@ class DetailFragment : BaseFragment(), DetailUseCase {
             container,
             false
         ).apply {
+            mainViewModel?.detailRefreshLiveData?.observe(viewLifecycleOwner, Observer {
+                getPost()
+            })
 
             detailViewModel.post.observe(viewLifecycleOwner, Observer {
                 model = it
@@ -88,18 +89,29 @@ class DetailFragment : BaseFragment(), DetailUseCase {
                 )
             }
 
-            detailViewModel.getPost(postId)
+            getPost()
         }
         return fragmentDetailBinding.root
     }
 
+    private fun getPost() {
+        detailViewModel.getPost(postId)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_detail_actionbar, menu)
         super.onCreateOptionsMenu(menu, inflater)
+        menu.clear()
+        inflater.inflate(R.menu.menu_detail_actionbar, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.menu_detail_edit -> {
+                typiCode?.let {
+                    mainViewModel?.editPost(it)
+                }
+                true
+            }
             R.id.menu_detail_delete ->  {
                 detailViewModel.deletePost(postId)
                 true
@@ -109,7 +121,7 @@ class DetailFragment : BaseFragment(), DetailUseCase {
     }
 
     override fun onSuccesDelete() {
-        mainViewModel?.setRefresh()
+        mainViewModel?.setPostsRefresh()
         finish()
     }
 

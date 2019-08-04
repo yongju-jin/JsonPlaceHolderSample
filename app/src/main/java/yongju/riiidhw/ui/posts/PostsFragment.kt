@@ -68,7 +68,7 @@ class PostsFragment: BaseFragment(), PostsItemUseCase {
             }
         }
 
-        mainViewModel?.refreshLiveData?.observe(viewLifecycleOwner, Observer {
+        mainViewModel?.postsRefreshLiveData?.observe(viewLifecycleOwner, Observer {
             refresh()
         })
 

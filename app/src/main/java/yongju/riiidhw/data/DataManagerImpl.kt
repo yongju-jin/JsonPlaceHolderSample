@@ -26,6 +26,10 @@ class DataManagerImpl(
         return apiInterface.deletePost(postId)
     }
 
+    override fun updatePost(postId: Long, body: Map<String, String>): Completable {
+        return apiInterface.updatePost(postId, body)
+    }
+
     companion object {
         val INSTANCE by lazy {
             DataManagerImpl(

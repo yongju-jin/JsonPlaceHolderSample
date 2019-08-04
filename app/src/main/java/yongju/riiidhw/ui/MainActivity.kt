@@ -9,6 +9,7 @@ import yongju.riiidhw.R
 import yongju.riiidhw.ui.base.BaseActivity
 import yongju.riiidhw.ui.base.viewModelFactory
 import yongju.riiidhw.ui.detail.DetailFragment
+import yongju.riiidhw.ui.edit.EditFragment
 import yongju.riiidhw.ui.posts.PostsFragment
 
 class MainActivity: BaseActivity() {
@@ -26,6 +27,12 @@ class MainActivity: BaseActivity() {
         mainViewModel.detailLiveData.observe(this, Observer {
             addBackStackFragment(
                 DetailFragment.createDetailFragment(it)
+            )
+        })
+
+        mainViewModel.editLiveData.observe(this, Observer {
+            addBackStackFragment(
+                EditFragment.createEditFragment(it)
             )
         })
 
