@@ -5,9 +5,9 @@ import com.facebook.stetho.Stetho
 import yongju.riiidhw.BuildConfig
 
 class Application: Application() {
+
     override fun onCreate() {
         super.onCreate()
-
         if (BuildConfig.DEBUG) run {
             Stetho.initialize(
                 Stetho.newInitializerBuilder(this)

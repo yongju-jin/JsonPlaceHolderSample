@@ -18,6 +18,8 @@ import yongju.riiidhw.ui.MainViewModel
 import yongju.riiidhw.ui.adapter.PostsAdapter
 import yongju.riiidhw.ui.base.BaseFragment
 import yongju.riiidhw.ui.base.viewModelFactory
+import yongju.riiidhw.ui.custom.VerticalMarginItemDecoration
+import yongju.riiidhw.ui.ext.toDP
 import yongju.riiidhw.ui.usecase.PostsItemUseCase
 
 class PostsFragment: BaseFragment(), PostsItemUseCase {
@@ -48,7 +50,7 @@ class PostsFragment: BaseFragment(), PostsItemUseCase {
             inflater,
             R.layout.fragment_main, container, false).apply {
 
-            rvMain.apply {
+            rvPosts.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                 adapter = PostsAdapter(postsViewModel).apply {
                     compositeDisposable += postsViewModel.mainObservable.
@@ -58,6 +60,9 @@ class PostsFragment: BaseFragment(), PostsItemUseCase {
                                 Log.e("mainFragment", it.toString(), it)
                             })
                 }
+                addItemDecoration(
+                    VerticalMarginItemDecoration(context.toDP(8))
+                )
             }
         }
 

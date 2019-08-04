@@ -17,8 +17,10 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:onClick="@{() -> usecase.onClickItem(model)}"
-        app:cardCornerRadius="8dp"
+        app:cardCornerRadius="16dp"
         app:cardElevation="16dp"
+        app:contentPadding="4dp"
+        app:contentPaddingLeft="8dp"
         >
 
     <androidx.constraintlayout.widget.ConstraintLayout
