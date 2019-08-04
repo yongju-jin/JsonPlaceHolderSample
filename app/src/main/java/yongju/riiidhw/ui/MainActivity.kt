@@ -2,7 +2,7 @@ package yongju.riiidhw.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LifecycleOwner
+import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import yongju.riiidhw.R
@@ -40,9 +40,9 @@ class MainActivity: BaseActivity() {
     }
 
     private fun addBackStackFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .add(R.id.fl_main_contents, fragment)
-            .addToBackStack(fragment.javaClass.name)
-            .commit()
+        supportFragmentManager.commit {
+            addToBackStack(fragment.javaClass.name)
+            add(R.id.fl_main_contents, fragment)
+        }
     }
 }

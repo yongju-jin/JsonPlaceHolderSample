@@ -11,6 +11,7 @@ import yongju.riiidhw.model.TypiCodeModel
 import yongju.riiidhw.ui.MainViewModel
 import yongju.riiidhw.ui.base.BaseFragment
 import yongju.riiidhw.ui.base.viewModelFactory
+import yongju.riiidhw.ui.ext.toast
 
 class EditFragment: BaseFragment(), EditUseCase {
     private val typiCode by lazy {
@@ -82,6 +83,12 @@ class EditFragment: BaseFragment(), EditUseCase {
         mainViewModel?.setPostsRefresh()
         mainViewModel?.setDetailRefresh()
         finish()
+    }
+
+    override fun onFailEdit() {
+        context?.let {
+            it.toast(it.getString(R.string.failed_edit))
+        }
     }
 
     companion object {

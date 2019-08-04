@@ -13,6 +13,7 @@ class EditViewModel(private val editUseCase: EditUseCase,
             .subscribeOn(Schedulers.io())
             .subscribe(editUseCase::onSuccessEdit) {
                 Log.e("editViewModel", it.toString(), it)
+                editUseCase.onFailEdit()
             }
     }
 }
