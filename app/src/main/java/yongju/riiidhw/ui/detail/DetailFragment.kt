@@ -20,6 +20,8 @@ import yongju.riiidhw.model.TypiCodeModel
 import yongju.riiidhw.ui.adapter.CommentsAdapter
 import yongju.riiidhw.ui.base.BaseFragment
 import yongju.riiidhw.ui.base.viewModelFactory
+import yongju.riiidhw.ui.custom.VerticalMarginItemDecoration
+import yongju.riiidhw.ui.ext.toDP
 
 class DetailFragment : BaseFragment() {
     private val typiCode by lazy {
@@ -65,6 +67,10 @@ class DetailFragment : BaseFragment() {
                         }
 
                 }
+
+                addItemDecoration(
+                    VerticalMarginItemDecoration(context.toDP(6))
+                )
             }
 
             detailViewModel.getPost(postId)
