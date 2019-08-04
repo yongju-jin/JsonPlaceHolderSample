@@ -6,4 +6,6 @@
     <string name="title">title</string>
     <string name="body">body</string>
     <string name="failed_edit">failed edit</string>
+    <string name="fail_get_post">failed to get post</string>
+    <string name="fail_delete_post">failed to delete post</string>
 </resources>

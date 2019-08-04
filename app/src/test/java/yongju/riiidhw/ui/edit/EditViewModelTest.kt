@@ -24,7 +24,6 @@ class EditViewModelTest {
     lateinit var editUseCase: EditUseCase
 
     private val testScheduler = Schedulers.trampoline()
-
     private val editViewModel by lazy {
         EditViewModel(editUseCase, dataManager)
     }

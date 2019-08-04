@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +21,7 @@ import yongju.riiidhw.ui.base.BaseFragment
 import yongju.riiidhw.ui.base.viewModelFactory
 import yongju.riiidhw.ui.custom.VerticalMarginItemDecoration
 import yongju.riiidhw.ui.ext.toDP
+import yongju.riiidhw.ui.ext.toast
 
 class DetailFragment : BaseFragment(), DetailUseCase {
     private val typiCode by lazy {
@@ -74,6 +76,10 @@ class DetailFragment : BaseFragment(), DetailUseCase {
                         Log.e("editViewModel", it.toString(), it)
                     }
             }
+
+            detailViewModel.errorMsg.observe(viewLifecycleOwner, Observer {
+                context?.toast(getString(it))
+            })
 
             rvDetailComments.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
