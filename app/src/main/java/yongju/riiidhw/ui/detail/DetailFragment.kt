@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.schedulers.Schedulers
 import yongju.riiidhw.R
 import yongju.riiidhw.data.DataManagerImpl
 import yongju.riiidhw.databinding.FragmentDetailBinding
@@ -64,13 +64,16 @@ class DetailFragment : BaseFragment(), DetailUseCase {
             container,
             false
         ).apply {
-            mainViewModel?.detailRefreshLiveData?.observe(viewLifecycleOwner, Observer {
-                getPost()
-            })
+            lifecycleOwner = viewLifecycleOwner
+            viewModel = detailViewModel
 
-            detailViewModel.post.observe(viewLifecycleOwner, Observer {
-                model = it
-            })
+            mainViewModel?.let {
+                it.detailRefreshSubject
+                    .subscribeOn(Schedulers.io())
+                    .subscribe({getPost()}) {
+                        Log.e("editViewModel", it.toString(), it)
+                    }
+            }
 
             rvDetailComments.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)

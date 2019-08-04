@@ -6,11 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.schedulers.Schedulers
 import yongju.riiidhw.R
 import yongju.riiidhw.data.DataManagerImpl
 import yongju.riiidhw.databinding.FragmentPostsBinding
@@ -68,9 +68,12 @@ class PostsFragment: BaseFragment(), PostsItemUseCase {
             }
         }
 
-        mainViewModel?.postsRefreshLiveData?.observe(viewLifecycleOwner, Observer {
-            refresh()
-        })
+        mainViewModel?.let {
+            it.postRefreshSubject.subscribeOn(Schedulers.io())
+                .subscribe({refresh()}, {
+                    Log.e("postFragment", it.toString(), it)
+                })
+        }
 
         return fragmentMainBinding.root
     }
