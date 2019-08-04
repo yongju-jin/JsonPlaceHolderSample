@@ -10,4 +10,12 @@ abstract class BaseFragment: Fragment() {
         compositeDisposable.clear()
         super.onDestroy()
     }
+
+    fun finish() {
+        if (isAdded) {
+            activity?.let {
+                it.supportFragmentManager.beginTransaction().remove(this).commit()
+            }
+        }
+    }
 }

@@ -10,7 +10,15 @@ class MainViewModel: BaseViewModel() {
     val detailLiveData: LiveData<TypiCodeModel>
         get() = _detailLiveData
 
+    private val _refreshLiveData = MutableLiveData<Unit>()
+    val refreshLiveData: LiveData<Unit>
+        get() = _refreshLiveData
+
     fun moveToDetails(item: TypiCodeModel) {
         _detailLiveData.postValue(item)
+    }
+
+    fun setRefresh() {
+        _refreshLiveData.postValue(Unit)
     }
 }

@@ -1,5 +1,6 @@
 package yongju.riiidhw.data
 
+import io.reactivex.Completable
 import io.reactivex.Single
 import yongju.riiidhw.data.remote.ApiInterface
 import yongju.riiidhw.data.remote.ApiProvider
@@ -19,6 +20,10 @@ class DataManagerImpl(
 
     override fun getComments(postId: Long): Single<List<TypiCodeCommentModel>> {
         return apiInterface.getComments(postId)
+    }
+
+    override fun deletePost(postId: Long): Completable {
+        return apiInterface.deletePost(postId)
     }
 
     companion object {

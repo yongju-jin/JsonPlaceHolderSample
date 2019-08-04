@@ -26,6 +26,7 @@ class PostsViewModel(
         PagedList.Config.Builder()
             .setInitialLoadSizeHint(PostsFactory.FIRST_LOAD_SIZE)
             .setPageSize(PostsFactory.LOAD_MORE_SIZE)
+            .setMaxSize(Int.MAX_VALUE)
             .setEnablePlaceholders(false)
             .build()
 

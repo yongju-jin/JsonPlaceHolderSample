@@ -1,4 +1,5 @@
 package yongju.riiidhw.ui.detail
 
-class DetailUseCase {
+interface DetailUseCase {
+    fun onSuccesDelete()
 }

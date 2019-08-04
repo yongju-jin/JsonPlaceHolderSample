@@ -6,13 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.rxkotlin.plusAssign
 import yongju.riiidhw.R
 import yongju.riiidhw.data.DataManagerImpl
-import yongju.riiidhw.databinding.FragmentMainBinding
+import yongju.riiidhw.databinding.FragmentPostsBinding
 import yongju.riiidhw.model.TypiCodeModel
 import yongju.riiidhw.ui.MainViewModel
 import yongju.riiidhw.ui.adapter.PostsAdapter
@@ -40,15 +41,16 @@ class PostsFragment: BaseFragment(), PostsItemUseCase {
             )
         }).get(PostsViewModel::class.java)
     }
-    private lateinit var fragmentMainBinding: FragmentMainBinding
+
+    private lateinit var fragmentMainBinding: FragmentPostsBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        fragmentMainBinding = DataBindingUtil.inflate<FragmentMainBinding>(
+        fragmentMainBinding = DataBindingUtil.inflate<FragmentPostsBinding>(
             inflater,
-            R.layout.fragment_main, container, false).apply {
+            R.layout.fragment_posts, container, false).apply {
 
             rvPosts.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -66,11 +68,20 @@ class PostsFragment: BaseFragment(), PostsItemUseCase {
             }
         }
 
+        mainViewModel?.refreshLiveData?.observe(viewLifecycleOwner, Observer {
+            refresh()
+        })
+
         return fragmentMainBinding.root
     }
 
+    private fun refresh() {
+        with(fragmentMainBinding.rvPosts) {
+            (adapter as? PostsAdapter)?.currentList?.dataSource?.invalidate()
+        }
+    }
+
     override fun onClickItem(item: TypiCodeModel) {
-        Log.d("mainFragment", "[onClickItem] item: $item")
         mainViewModel?.moveToDetails(item)
     }
 
@@ -79,5 +90,4 @@ class PostsFragment: BaseFragment(), PostsItemUseCase {
             return PostsFragment()
         }
     }
-
 }

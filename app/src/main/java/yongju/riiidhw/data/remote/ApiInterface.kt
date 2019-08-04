@@ -1,6 +1,8 @@
 package yongju.riiidhw.data.remote
 
+import io.reactivex.Completable
 import io.reactivex.Single
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -16,4 +18,8 @@ interface ApiInterface {
 
    @GET("/posts/{postId}/comments")
    fun getComments(@Path("postId") postId: Long): Single<List<TypiCodeCommentModel>>
+
+   @DELETE("/posts/{postId}")
+   fun deletePost(@Path("postId") postId: Long): Completable
+
 }

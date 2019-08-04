@@ -22,7 +22,7 @@ class PostsFactory(
     }
 
     companion object {
-        const val FIRST_LOAD_SIZE = 20
+        const val FIRST_LOAD_SIZE = 30
         const val LOAD_MORE_SIZE = 24
     }
 }
