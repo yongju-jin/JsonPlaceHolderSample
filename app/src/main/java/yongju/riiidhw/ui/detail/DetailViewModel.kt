@@ -7,6 +7,7 @@ import io.reactivex.Single
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 import yongju.riiidhw.data.DataManager
+import yongju.riiidhw.model.TypiCodeCommentModel
 import yongju.riiidhw.model.TypiCodeModel
 import yongju.riiidhw.ui.base.BaseViewModel
 
@@ -18,8 +19,12 @@ class DetailViewModel(private val dataManager: DataManager): BaseViewModel() {
     fun getPost(postId: Long) {
         compositeDisposable += dataManager.getPost(postId)
             .observeOn(Schedulers.io())
-            .subscribe(_post::postValue, {
+            .subscribe(_post::postValue) {
                 Log.e("detailViewModel", it.toString(), it)
-            })
+            }
+    }
+
+    fun getComments(postId: Long): Single<List<TypiCodeCommentModel>> {
+        return dataManager.getComments(postId).subscribeOn(Schedulers.io())
     }
 }

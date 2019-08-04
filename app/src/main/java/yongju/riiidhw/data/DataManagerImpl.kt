@@ -3,6 +3,7 @@ package yongju.riiidhw.data
 import io.reactivex.Single
 import yongju.riiidhw.data.remote.ApiInterface
 import yongju.riiidhw.data.remote.ApiProvider
+import yongju.riiidhw.model.TypiCodeCommentModel
 import yongju.riiidhw.model.TypiCodeModel
 
 class DataManagerImpl(
@@ -14,6 +15,10 @@ class DataManagerImpl(
 
     override fun getPost(postId: Long): Single<TypiCodeModel> {
         return apiInterface.getPost(postId)
+    }
+
+    override fun getComments(postId: Long): Single<List<TypiCodeCommentModel>> {
+        return apiInterface.getComments(postId)
     }
 
     companion object {

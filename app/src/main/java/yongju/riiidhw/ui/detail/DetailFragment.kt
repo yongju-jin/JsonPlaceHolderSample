@@ -1,22 +1,27 @@
 package yongju.riiidhw.ui.detail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 import yongju.riiidhw.R
 import yongju.riiidhw.data.DataManagerImpl
 import yongju.riiidhw.databinding.FragmentDetailBinding
 import yongju.riiidhw.model.TypiCodeModel
+import yongju.riiidhw.ui.adapter.CommentsAdapter
 import yongju.riiidhw.ui.base.BaseFragment
 import yongju.riiidhw.ui.base.viewModelFactory
 
-class DetailFragment: BaseFragment() {
-
+class DetailFragment : BaseFragment() {
     private val typiCode by lazy {
         arguments?.let {
             it.getParcelable<TypiCodeModel>(TYPI_CODE)
@@ -43,18 +48,26 @@ class DetailFragment: BaseFragment() {
             container,
             false
         ).apply {
+            val postId = typiCode?.id ?: -1
+
             detailViewModel.post.observe(viewLifecycleOwner, Observer {
                 model = it
             })
 
             rvDetailComments.apply {
+                layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                adapter = CommentsAdapter().apply {
+                    compositeDisposable += detailViewModel.getComments(postId)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(this::submitList)
+                        {
+                            Log.e("detailViewModel", it.toString(), it)
+                        }
 
+                }
             }
 
-            typiCode?.let {
-                detailViewModel.getPost(it.id)
-            }
-
+            detailViewModel.getPost(postId)
         }
         return fragmentDetailBinding.root
     }

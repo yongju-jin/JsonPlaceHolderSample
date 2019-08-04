@@ -4,6 +4,7 @@ import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import yongju.riiidhw.model.TypiCodeCommentModel
 import yongju.riiidhw.model.TypiCodeModel
 
 interface ApiInterface {
@@ -12,4 +13,7 @@ interface ApiInterface {
 
    @GET("/posts/{postId}")
    fun getPost(@Path("postId") postId: Long): Single<TypiCodeModel>
+
+   @GET("/posts/{postId}/comments")
+   fun getComments(@Path("postId") postId: Long): Single<List<TypiCodeCommentModel>>
 }

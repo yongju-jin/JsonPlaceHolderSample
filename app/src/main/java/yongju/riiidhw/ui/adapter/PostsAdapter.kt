@@ -1,4 +1,4 @@
-package yongju.riiidhw.ui.adapter.posts
+package yongju.riiidhw.ui.adapter
 
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter

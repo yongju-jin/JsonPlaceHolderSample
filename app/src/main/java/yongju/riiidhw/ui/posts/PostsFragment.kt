@@ -15,7 +15,7 @@ import yongju.riiidhw.data.DataManagerImpl
 import yongju.riiidhw.databinding.FragmentMainBinding
 import yongju.riiidhw.model.TypiCodeModel
 import yongju.riiidhw.ui.MainViewModel
-import yongju.riiidhw.ui.adapter.posts.PostsAdapter
+import yongju.riiidhw.ui.adapter.PostsAdapter
 import yongju.riiidhw.ui.base.BaseFragment
 import yongju.riiidhw.ui.base.viewModelFactory
 import yongju.riiidhw.ui.usecase.PostsItemUseCase
@@ -53,8 +53,6 @@ class PostsFragment: BaseFragment(), PostsItemUseCase {
                 adapter = PostsAdapter(postsViewModel).apply {
                     compositeDisposable += postsViewModel.mainObservable.
                             subscribe({
-                                Log.d("mainFragment", "[mainObservable] submitList: $it")
-                                Log.d("mainFragment", "[mainObservable] thread: ${Thread.currentThread().name}")
                                 submitList(it)
                             }, {
                                 Log.e("mainFragment", it.toString(), it)
