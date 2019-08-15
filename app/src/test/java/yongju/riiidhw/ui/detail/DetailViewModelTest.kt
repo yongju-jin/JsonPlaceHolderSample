@@ -3,13 +3,11 @@ package yongju.riiidhw.ui.detail
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.plugins.RxAndroidPlugins
-import io.reactivex.observers.TestObserver
 import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.schedulers.Schedulers
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-
-import org.junit.Assert.*
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.*

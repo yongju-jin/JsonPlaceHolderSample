@@ -14,6 +14,7 @@ import yongju.riiidhw.ui.base.BaseViewModel
 
 class DetailViewModel(private val detailUseCase: DetailUseCase,
                       private val dataManager: DataManager): BaseViewModel() {
+    // view 관련된 작업은 LiveData로
     private val _post = MutableLiveData<TypiCodeModel>()
     val post: LiveData<TypiCodeModel>
         get() = _post
@@ -21,7 +22,15 @@ class DetailViewModel(private val detailUseCase: DetailUseCase,
     private val _errorMsg = MutableLiveData<Int>()
     val errorMsg: LiveData<Int>
         get() = _errorMsg
+    // LiveData의 장점.
+    // DataBinding에서 바로 변경사항을 적용할 수 있음.
+    // 따로 Dispose 관리를 안해줘도 되서 Rx에 비해 편함.
 
+    // LiveData로 Data를 전달해 줄 때는 Rx를 사용.
+    // 비니지스 로직은 Rx로 하는 이유
+    // 많은 operator.
+    // 많은 reference.
+    // retrofit 지원.
     fun getPost(postId: Long) {
         compositeDisposable += dataManager.getPost(postId)
             .observeOn(Schedulers.io())

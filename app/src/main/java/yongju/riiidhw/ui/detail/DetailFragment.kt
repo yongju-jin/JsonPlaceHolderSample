@@ -72,8 +72,8 @@ class DetailFragment : BaseFragment(), DetailUseCase {
             mainViewModel?.let {
                 it.detailRefreshSubject
                     .subscribeOn(Schedulers.io())
-                    .subscribe({getPost()}) {
-                        Log.e("editViewModel", it.toString(), it)
+                    .subscribe({getPost()}) { e ->
+                        Log.e("editViewModel", e.toString(), e)
                     }
             }
 
