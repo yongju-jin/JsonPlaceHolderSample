@@ -7,6 +7,7 @@ import yongju.riiidhw.model.TypiCodeModel
 import yongju.riiidhw.ui.base.BaseViewModel
 
 class MainViewModel: BaseViewModel() {
+
     private val _editLiveData = MutableLiveData<TypiCodeModel>()
     val editLiveData: LiveData<TypiCodeModel>
         get() = _editLiveData
