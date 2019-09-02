@@ -52,4 +52,21 @@ class DetailViewModel(private val detailUseCase: DetailUseCase,
                 Log.e("mainViewModel", it.toString(), it)
             }
     }
+
+    suspend fun getPostByCoroutines(postId: Long) {
+        val ret = dataManager.getPostByCoroutines(postId)
+        Log.i("detailViewModel", "[getPostByCoroutines][${Thread.currentThread().name}] ret: $ret")
+        _post.postValue(ret)
+    }
+
+    suspend fun getCommentsByCoroutines(postId: Long): List<TypiCodeCommentModel> {
+        val ret = dataManager.getCommentsByCoroutines(postId)
+        Log.i("detailViewModel", "[getCommentsByCoroutines][${Thread.currentThread().name}] ret: $ret")
+        return ret
+    }
+
+    suspend fun deletePostByCoroutines(postId: Long) {
+        val ret = dataManager.deletePostByCoroutines(postId)
+        Log.i("detailViewModel", "[deletePostByCoroutines][${Thread.currentThread().name}] ret: $ret")
+    }
 }

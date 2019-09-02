@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import yongju.riiidhw.R
 import yongju.riiidhw.data.DataManagerImpl
 import yongju.riiidhw.databinding.FragmentDetailBinding
@@ -69,13 +71,13 @@ class DetailFragment : BaseFragment(), DetailUseCase {
             lifecycleOwner = viewLifecycleOwner
             viewModel = detailViewModel
 
-            mainViewModel?.let {
-                it.detailRefreshSubject
-                    .subscribeOn(Schedulers.io())
-                    .subscribe({getPost()}) { e ->
-                        Log.e("editViewModel", e.toString(), e)
-                    }
-            }
+//            mainViewModel?.let {
+//                it.detailRefreshSubject
+//                    .subscribeOn(Schedulers.io())
+//                    .subscribe({getPost()}) { e ->
+//                        Log.e("editViewModel", e.toString(), e)
+//                    }
+//            }
 
             detailViewModel.errorMsg.observe(viewLifecycleOwner, Observer {
                 context?.toast(getString(it))
@@ -84,13 +86,11 @@ class DetailFragment : BaseFragment(), DetailUseCase {
             rvDetailComments.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                 adapter = CommentsAdapter().apply {
-                    compositeDisposable += detailViewModel.getComments(postId)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(this::submitList)
-                        {
-                            Log.e("detailViewModel", it.toString(), it)
-                        }
-
+                    launch {
+                        submitList(
+                            detailViewModel.getCommentsByCoroutines(postId)
+                        )
+                    }
                 }
 
                 addItemDecoration(
@@ -98,13 +98,15 @@ class DetailFragment : BaseFragment(), DetailUseCase {
                 )
             }
 
-            getPost()
+            launch {
+                getPost()
+            }
         }
         return fragmentDetailBinding.root
     }
 
-    private fun getPost() {
-        detailViewModel.getPost(postId)
+    private suspend fun getPost() {
+        detailViewModel.getPostByCoroutines(postId)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

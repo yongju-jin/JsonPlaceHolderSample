@@ -3,6 +3,8 @@ package yongju.riiidhw.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.subjects.PublishSubject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import yongju.riiidhw.model.TypiCodeModel
 import yongju.riiidhw.ui.base.BaseViewModel
 

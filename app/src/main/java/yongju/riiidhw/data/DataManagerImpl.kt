@@ -30,6 +30,19 @@ class DataManagerImpl(
         return apiInterface.updatePost(postId, body)
     }
 
+
+    override suspend fun deletePostByCoroutines(postId: Long): String {
+        return apiInterface.deletePostByCoroutines(postId)
+    }
+
+    override suspend fun getPostByCoroutines(postId: Long): TypiCodeModel {
+        return apiInterface.getPostByCoroutines(postId)
+    }
+
+    override suspend fun getCommentsByCoroutines(postId: Long): List<TypiCodeCommentModel> {
+        return apiInterface.getCommentsByCoroutines(postId)
+    }
+
     companion object {
         val INSTANCE by lazy {
             DataManagerImpl(

@@ -22,4 +22,13 @@ interface ApiInterface {
    @Headers("Content-Type: application/json; charset=utf-8")
    @PATCH("/posts/{postId}")
    fun updatePost(@Path("postId") postId: Long, @Body body: Map<String, String>): Completable
+
+   @DELETE("/posts/{postId}")
+   suspend fun deletePostByCoroutines(@Path("postId") postId: Long): String
+
+   @GET("/posts/{postId}")
+   suspend fun getPostByCoroutines(@Path("postId") postId: Long): TypiCodeModel
+
+   @GET("/posts/{postId}/comments")
+   suspend fun getCommentsByCoroutines(@Path("postId") postId: Long): List<TypiCodeCommentModel>
 }
